@@ -56,7 +56,7 @@ quantara-core/
 
 ## Getting started
 
-Requirements: Java 21+, Maven 3.9+, Docker, Rust + `wasm32-unknown-unknown` target.
+Requirements: Java 21+, Maven 3.9+, Docker, Rust + `wasm32v1-none` target.
 
 ```bash
 # start Postgres + backend

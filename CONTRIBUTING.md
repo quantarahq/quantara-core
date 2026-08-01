@@ -18,7 +18,7 @@ Requirements:
 - Java 21+
 - Maven 3.9+
 - Docker (for Postgres via `docker compose` and for Testcontainers-based integration tests)
-- Rust (stable) with the `wasm32-unknown-unknown` target, for the Soroban contract
+- Rust (stable) with the `wasm32v1-none` target, for the Soroban contract
 
 ```bash
 git clone https://github.com/quantarahq/quantara-core.git
