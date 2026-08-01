@@ -44,4 +44,21 @@ class DeployControllerIT extends AbstractIntegrationTest {
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
+
+  @Test
+  void deployWithMissingContractFieldReturnsValidationError() {
+    ProjectResponse project =
+        restTemplate
+            .postForEntity(
+                "/api/projects",
+                new CreateProjectRequest("validation-project", null),
+                ProjectResponse.class)
+            .getBody();
+
+    ResponseEntity<String> response =
+        restTemplate.postForEntity(
+            "/api/deploy", new DeployRequest(project.id(), ""), String.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+  }
 }
