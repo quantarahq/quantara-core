@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+logging:
+  level:
+    dev.quantara.core: DEBUG
+    org.testcontainers: WARN
