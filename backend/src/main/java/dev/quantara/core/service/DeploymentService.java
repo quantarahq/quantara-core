@@ -2,12 +2,14 @@ package dev.quantara.core.service;
 
 import dev.quantara.core.dto.DeployRequest;
 import dev.quantara.core.dto.DeployResponse;
+import dev.quantara.core.dto.DeploymentResponse;
 import dev.quantara.core.entity.Deployment;
 import dev.quantara.core.entity.DeploymentStatus;
 import dev.quantara.core.entity.Project;
 import dev.quantara.core.exception.ResourceNotFoundException;
 import dev.quantara.core.repository.DeploymentRepository;
 import dev.quantara.core.repository.ProjectRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,13 @@ public class DeploymentService {
     contractService.registerContract(deployment);
 
     return new DeployResponse(deployment.getStatus().name(), deployment.getDeploymentId());
+  }
+
+  @Transactional(readOnly = true)
+  public List<DeploymentResponse> listByProject(Long projectId) {
+    return deploymentRepository.findByProjectId(projectId).stream()
+        .map(DeploymentResponse::from)
+        .toList();
   }
 
   private String nextDeploymentId() {
