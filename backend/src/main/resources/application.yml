@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: quantara-core-backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/quantara}
+    username: ${DB_USERNAME:quantara}
+    password: ${DB_PASSWORD:quantara}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${SERVER_PORT:8080}
+
+springdoc:
+  api-docs:
+    path: /api/docs
+  swagger-ui:
+    path: /api/docs/ui
+
+quantara:
+  cors:
+    allowed-origins: ${QUANTARA_WEB_ORIGIN:http://localhost:3000}
+
+logging:
+  level:
+    dev.quantara.core: INFO
