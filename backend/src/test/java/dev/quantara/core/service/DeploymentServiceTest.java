@@ -32,6 +32,9 @@ class DeploymentServiceTest {
     @Mock
     private ProjectRepository projectRepository;
 
+    @Mock
+    private ContractService contractService;
+
     @InjectMocks
     private DeploymentService deploymentService;
 
