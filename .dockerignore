@@ -1,0 +1,6 @@
+.git
+.github
+backend/target
+contracts/**/target
+docs
+*.md
