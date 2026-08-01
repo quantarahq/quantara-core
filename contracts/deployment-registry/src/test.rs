@@ -14,7 +14,10 @@ fn store_and_get_deployment_round_trips() {
 
     let deployment_id = String::from_str(&env, "deploy-001");
     let project_name = String::from_str(&env, "example-contract");
-    let hash = String::from_str(&env, "ed44b5088f867bc4897b6cb03f33e842bfb2da3f8af535b1acbb7b7b38c8dc2");
+    let hash = String::from_str(
+        &env,
+        "ed44b5088f867bc4897b6cb03f33e842bfb2da3f8af535b1acbb7b7b38c8dc2",
+    );
 
     client.store_deployment(&deployment_id, &project_name, &hash);
     let record = client.get_deployment(&deployment_id).unwrap();
