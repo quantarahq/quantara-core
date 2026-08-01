@@ -23,3 +23,26 @@ jobs:
       - name: mvn clean verify
         working-directory: backend
         run: mvn -B clean verify
+
+  contract:
+    name: Soroban contract (build + test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: contracts/deployment-registry
+
+      - name: cargo test
+        working-directory: contracts/deployment-registry
+        run: cargo test
+
+      - name: cargo build (wasm32-unknown-unknown, release)
+        working-directory: contracts/deployment-registry
+        run: cargo build --target wasm32-unknown-unknown --release
