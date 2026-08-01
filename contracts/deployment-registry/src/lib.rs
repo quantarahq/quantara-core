@@ -27,4 +27,9 @@ impl DeploymentRegistry {
         let record = DeploymentRecord { project_name, hash };
         env.storage().persistent().set(&deployment_id, &record);
     }
+
+    /// Retrieves the deployment record for `deployment_id`, if one exists.
+    pub fn get_deployment(env: Env, deployment_id: String) -> Option<DeploymentRecord> {
+        env.storage().persistent().get(&deployment_id)
+    }
 }
