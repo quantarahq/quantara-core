@@ -6,9 +6,9 @@ backend/target/
 .mvn/timing.properties
 
 # Rust
+# Cargo.lock IS committed for contracts (deployable artifacts, not libraries)
+# so builds are reproducible — only ignore build output.
 contracts/**/target/
-contracts/**/Cargo.lock
-!contracts/**/*.wasm.README
 
 # Node (docs tooling, if any)
 node_modules/
