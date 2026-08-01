@@ -50,3 +50,20 @@ fn store_deployment_overwrites_existing_record() {
     assert_eq!(record.project_name, second_project);
     assert_eq!(record.hash, second_hash);
 }
+
+#[test]
+fn distinct_deployment_ids_are_stored_independently() {
+    let (env, client) = setup();
+
+    let first_id = String::from_str(&env, "deploy-001");
+    let second_id = String::from_str(&env, "deploy-002");
+    let project_name = String::from_str(&env, "example-contract");
+    let first_hash = String::from_str(&env, "hash-one");
+    let second_hash = String::from_str(&env, "hash-two");
+
+    client.store_deployment(&first_id, &project_name, &first_hash);
+    client.store_deployment(&second_id, &project_name, &second_hash);
+
+    assert_eq!(client.get_deployment(&first_id).unwrap().hash, first_hash);
+    assert_eq!(client.get_deployment(&second_id).unwrap().hash, second_hash);
+}
