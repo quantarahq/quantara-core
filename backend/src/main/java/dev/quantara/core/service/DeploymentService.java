@@ -12,43 +12,46 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Simulates a Soroban contract deployment workflow. The MVP does not talk to real
- * deployment infrastructure — it records a deployment attempt so the rest of the
- * platform (dashboard, contract registry) has something real to display and build on.
+ * Simulates a Soroban contract deployment workflow. The MVP does not talk to real deployment
+ * infrastructure — it records a deployment attempt so the rest of the platform (dashboard, contract
+ * registry) has something real to display and build on.
  */
 @Service
 public class DeploymentService {
 
-    private final DeploymentRepository deploymentRepository;
-    private final ProjectRepository projectRepository;
-    private final ContractService contractService;
+  private final DeploymentRepository deploymentRepository;
+  private final ProjectRepository projectRepository;
+  private final ContractService contractService;
 
-    public DeploymentService(
-            DeploymentRepository deploymentRepository,
-            ProjectRepository projectRepository,
-            ContractService contractService
-    ) {
-        this.deploymentRepository = deploymentRepository;
-        this.projectRepository = projectRepository;
-        this.contractService = contractService;
-    }
+  public DeploymentService(
+      DeploymentRepository deploymentRepository,
+      ProjectRepository projectRepository,
+      ContractService contractService) {
+    this.deploymentRepository = deploymentRepository;
+    this.projectRepository = projectRepository;
+    this.contractService = contractService;
+  }
 
-    @Transactional
-    public DeployResponse deploy(DeployRequest request) {
-        Project project = projectRepository.findById(request.projectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Project not found: " + request.projectId()));
+  @Transactional
+  public DeployResponse deploy(DeployRequest request) {
+    Project project =
+        projectRepository
+            .findById(request.projectId())
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Project not found: " + request.projectId()));
 
-        String deploymentId = nextDeploymentId();
-        Deployment deployment = new Deployment(deploymentId, project, request.contract(), DeploymentStatus.SUCCESS);
-        deploymentRepository.save(deployment);
+    String deploymentId = nextDeploymentId();
+    Deployment deployment =
+        new Deployment(deploymentId, project, request.contract(), DeploymentStatus.SUCCESS);
+    deploymentRepository.save(deployment);
 
-        contractService.registerContract(deployment);
+    contractService.registerContract(deployment);
 
-        return new DeployResponse(deployment.getStatus().name(), deployment.getDeploymentId());
-    }
+    return new DeployResponse(deployment.getStatus().name(), deployment.getDeploymentId());
+  }
 
-    private String nextDeploymentId() {
-        long sequence = deploymentRepository.count() + 1;
-        return "deploy-%03d".formatted(sequence);
-    }
+  private String nextDeploymentId() {
+    long sequence = deploymentRepository.count() + 1;
+    return "deploy-%03d".formatted(sequence);
+  }
 }

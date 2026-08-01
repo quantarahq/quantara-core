@@ -10,13 +10,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
-    @Bean
-    public OpenAPI quantaraOpenApi() {
-        return new OpenAPI().info(new Info()
+  @Bean
+  public OpenAPI quantaraOpenApi() {
+    return new OpenAPI()
+        .info(
+            new Info()
                 .title("Quantara Core API")
-                .description("Backend API for the Quantara Soroban developer infrastructure platform")
+                .description(
+                    "Backend API for the Quantara Soroban developer infrastructure platform")
                 .version("v0.1.0")
-                .license(new License().name("MIT").url("https://github.com/quantarahq/quantara-core/blob/main/LICENSE"))
+                .license(
+                    new License()
+                        .name("MIT")
+                        .url("https://github.com/quantarahq/quantara-core/blob/main/LICENSE"))
                 .contact(new Contact().name("Quantara").url("https://github.com/quantarahq")));
-    }
+  }
 }

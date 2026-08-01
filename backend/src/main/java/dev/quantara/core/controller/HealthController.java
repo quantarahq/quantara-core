@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Health", description = "Service health check")
 public class HealthController {
 
-    @GetMapping("/api/health")
-    public HealthResponse health() {
-        return HealthResponse.up();
-    }
+  @GetMapping("/api/health")
+  public HealthResponse health() {
+    return HealthResponse.up();
+  }
 }

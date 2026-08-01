@@ -1,5 +1,7 @@
 package dev.quantara.core.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import dev.quantara.core.AbstractIntegrationTest;
 import dev.quantara.core.dto.CreateProjectRequest;
 import dev.quantara.core.dto.DeployRequest;
@@ -11,40 +13,35 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class DeployControllerIT extends AbstractIntegrationTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+  @Autowired private TestRestTemplate restTemplate;
 
-    @Test
-    void deployAgainstExistingProjectSucceeds() {
-        ProjectResponse project = restTemplate.postForEntity(
+  @Test
+  void deployAgainstExistingProjectSucceeds() {
+    ProjectResponse project =
+        restTemplate
+            .postForEntity(
                 "/api/projects",
                 new CreateProjectRequest("deployable-project", "used for deploy IT"),
-                ProjectResponse.class
-        ).getBody();
+                ProjectResponse.class)
+            .getBody();
 
-        ResponseEntity<DeployResponse> deployResponse = restTemplate.postForEntity(
-                "/api/deploy",
-                new DeployRequest(project.id(), "example"),
-                DeployResponse.class
-        );
+    ResponseEntity<DeployResponse> deployResponse =
+        restTemplate.postForEntity(
+            "/api/deploy", new DeployRequest(project.id(), "example"), DeployResponse.class);
 
-        assertThat(deployResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(deployResponse.getBody().status()).isEqualTo("SUCCESS");
-        assertThat(deployResponse.getBody().deploymentId()).startsWith("deploy-");
-    }
+    assertThat(deployResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(deployResponse.getBody().status()).isEqualTo("SUCCESS");
+    assertThat(deployResponse.getBody().deploymentId()).startsWith("deploy-");
+  }
 
-    @Test
-    void deployAgainstMissingProjectReturnsNotFound() {
-        ResponseEntity<String> response = restTemplate.postForEntity(
-                "/api/deploy",
-                new DeployRequest(999_999L, "example"),
-                String.class
-        );
+  @Test
+  void deployAgainstMissingProjectReturnsNotFound() {
+    ResponseEntity<String> response =
+        restTemplate.postForEntity(
+            "/api/deploy", new DeployRequest(999_999L, "example"), String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+  }
 }

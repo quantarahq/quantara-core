@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Deployments", description = "Simulated Soroban contract deployment workflow")
 public class DeployController {
 
-    private final DeploymentService deploymentService;
+  private final DeploymentService deploymentService;
 
-    public DeployController(DeploymentService deploymentService) {
-        this.deploymentService = deploymentService;
-    }
+  public DeployController(DeploymentService deploymentService) {
+    this.deploymentService = deploymentService;
+  }
 
-    @PostMapping
-    public DeployResponse deploy(@Valid @RequestBody DeployRequest request) {
-        return deploymentService.deploy(request);
-    }
+  @PostMapping
+  public DeployResponse deploy(@Valid @RequestBody DeployRequest request) {
+    return deploymentService.deploy(request);
+  }
 }

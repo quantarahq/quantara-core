@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class QuantaraCoreApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(QuantaraCoreApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(QuantaraCoreApplication.class, args);
+  }
 }
