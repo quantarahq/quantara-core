@@ -45,7 +45,8 @@ class DeploymentControllerIT extends AbstractIntegrationTest {
     ProjectResponse project =
         restTemplate
             .postForEntity(
-                "/api/projects", new CreateProjectRequest("no-deployments-project", null),
+                "/api/projects",
+                new CreateProjectRequest("no-deployments-project", null),
                 ProjectResponse.class)
             .getBody();
 
