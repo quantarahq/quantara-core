@@ -31,3 +31,22 @@ fn get_deployment_returns_none_when_missing() {
 
     assert_eq!(client.get_deployment(&deployment_id), None);
 }
+
+#[test]
+fn store_deployment_overwrites_existing_record() {
+    let (env, client) = setup();
+
+    let deployment_id = String::from_str(&env, "deploy-002");
+    let first_project = String::from_str(&env, "first-project");
+    let first_hash = String::from_str(&env, "hash-one");
+    let second_project = String::from_str(&env, "second-project");
+    let second_hash = String::from_str(&env, "hash-two");
+
+    client.store_deployment(&deployment_id, &first_project, &first_hash);
+    client.store_deployment(&deployment_id, &second_project, &second_hash);
+
+    let record = client.get_deployment(&deployment_id).unwrap();
+
+    assert_eq!(record.project_name, second_project);
+    assert_eq!(record.hash, second_hash);
+}
