@@ -7,12 +7,14 @@ import static org.mockito.Mockito.when;
 
 import dev.quantara.core.dto.DeployRequest;
 import dev.quantara.core.dto.DeployResponse;
+import dev.quantara.core.dto.DeploymentResponse;
 import dev.quantara.core.entity.Deployment;
 import dev.quantara.core.entity.DeploymentStatus;
 import dev.quantara.core.entity.Project;
 import dev.quantara.core.exception.ResourceNotFoundException;
 import dev.quantara.core.repository.DeploymentRepository;
 import dev.quantara.core.repository.ProjectRepository;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,5 +68,18 @@ class DeploymentServiceTest {
     DeployResponse response = deploymentService.deploy(new DeployRequest(1L, "example"));
 
     assertThat(response.deploymentId()).isEqualTo("deploy-005");
+  }
+
+  @Test
+  void listByProjectReturnsMappedDeployments() {
+    var project = new Project("example-contract", null);
+    var deployment = new Deployment("deploy-001", project, "example", DeploymentStatus.SUCCESS);
+    when(deploymentRepository.findByProjectId(1L)).thenReturn(List.of(deployment));
+
+    List<DeploymentResponse> responses = deploymentService.listByProject(1L);
+
+    assertThat(responses).hasSize(1);
+    assertThat(responses.get(0).deploymentId()).isEqualTo("deploy-001");
+    assertThat(responses.get(0).status()).isEqualTo("SUCCESS");
   }
 }
