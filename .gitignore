@@ -9,6 +9,7 @@ backend/target/
 # Cargo.lock IS committed for contracts (deployable artifacts, not libraries)
 # so builds are reproducible — only ignore build output.
 contracts/**/target/
+contracts/**/test_snapshots/
 
 # Node (docs tooling, if any)
 node_modules/
