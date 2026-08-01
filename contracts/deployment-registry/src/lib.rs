@@ -20,4 +20,11 @@ pub struct DeploymentRecord {
 pub struct DeploymentRegistry;
 
 #[contractimpl]
-impl DeploymentRegistry {}
+impl DeploymentRegistry {
+    /// Stores a deployment verification record, keyed by `deployment_id`.
+    /// Overwrites any existing record for the same `deployment_id`.
+    pub fn store_deployment(env: Env, deployment_id: String, project_name: String, hash: String) {
+        let record = DeploymentRecord { project_name, hash };
+        env.storage().persistent().set(&deployment_id, &record);
+    }
+}
