@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "backend"
+
+  - package-ecosystem: "cargo"
+    directory: "/contracts/deployment-registry"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "smart-contract"
+
+  - package-ecosystem: "docker"
+    directory: "/infra/docker"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "infra"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "infra"
