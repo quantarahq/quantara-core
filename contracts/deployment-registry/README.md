@@ -35,7 +35,7 @@ access control is natural `future`-labeled contribution work.
 
 ## Building and testing
 
-Requirements: Rust (stable) with the `wasm32-unknown-unknown` target, and the
+Requirements: Rust (stable) with the `wasm32v1-none` target, and the
 [`stellar` CLI](https://developers.stellar.org/docs/tools/stellar-cli) (formerly `soroban-cli`).
 
 ```bash
@@ -44,10 +44,14 @@ cargo test
 
 # build the deployable wasm
 stellar contract build
-# or: cargo build --target wasm32-unknown-unknown --release
+# or: cargo build --target wasm32v1-none --release
 ```
 
-The build produces `target/wasm32-unknown-unknown/release/deployment_registry.wasm`.
+The build produces `target/wasm32v1-none/release/deployment_registry.wasm`.
+
+> Note: `soroban-sdk` 27+ requires the `wasm32v1-none` target (Rust 1.84+) rather than
+> `wasm32-unknown-unknown`, which gained WASM features Soroban's environment doesn't yet
+> support. Install it with `rustup target add wasm32v1-none`.
 
 ## Deploying (manual, for now)
 
@@ -58,7 +62,7 @@ manually against a local/testnet network:
 
 ```bash
 stellar contract deploy \
-  --wasm target/wasm32-unknown-unknown/release/deployment_registry.wasm \
+  --wasm target/wasm32v1-none/release/deployment_registry.wasm \
   --source <your-identity> \
   --network testnet
 ```
