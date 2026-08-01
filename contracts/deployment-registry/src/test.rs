@@ -22,3 +22,12 @@ fn store_and_get_deployment_round_trips() {
     assert_eq!(record.project_name, project_name);
     assert_eq!(record.hash, hash);
 }
+
+#[test]
+fn get_deployment_returns_none_when_missing() {
+    let (env, client) = setup();
+
+    let deployment_id = String::from_str(&env, "deploy-does-not-exist");
+
+    assert_eq!(client.get_deployment(&deployment_id), None);
+}
