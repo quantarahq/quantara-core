@@ -68,9 +68,15 @@ cd backend
 mvn spring-boot:run
 ```
 
-The API is served at `http://localhost:8080`. See [docs/architecture.md](docs/architecture.md)
-for a deeper look at the modules, and `backend/README.md` (coming in this phase) for API
-details once the endpoints land.
+The API is served at `http://localhost:8080` (Swagger UI at `/api/docs/ui`). See
+[docs/architecture.md](docs/architecture.md) for a deeper look at the modules and the
+`POST /api/deploy` → contract registry flow.
+
+## Smart contract
+
+See [contracts/deployment-registry/README.md](contracts/deployment-registry/README.md)
+for the on-chain `DeploymentRegistry` Soroban contract — what it does, and how to build
+and test it with `cargo test` / `stellar contract build`.
 
 ## Status
 
