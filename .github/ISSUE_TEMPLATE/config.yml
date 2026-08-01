@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/quantarahq/quantara-core/discussions
+    about: For open-ended questions that aren't a bug or feature request.
+  - name: quantara-web (frontend) issues
+    url: https://github.com/quantarahq/quantara-web/issues/new/choose
+    about: If your issue is about the dashboard rather than the API or contract, file it there.
