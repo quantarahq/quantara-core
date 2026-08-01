@@ -1,0 +1,32 @@
+# Java / Maven
+backend/target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+
+# Rust
+contracts/**/target/
+contracts/**/Cargo.lock
+!contracts/**/*.wasm.README
+
+# Node (docs tooling, if any)
+node_modules/
+
+# Env / secrets
+.env
+.env.local
+*.pem
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Docker
+infra/docker/**/*.local.yml
