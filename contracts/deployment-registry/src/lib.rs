@@ -33,3 +33,6 @@ impl DeploymentRegistry {
         env.storage().persistent().get(&deployment_id)
     }
 }
+
+#[cfg(test)]
+mod test;
