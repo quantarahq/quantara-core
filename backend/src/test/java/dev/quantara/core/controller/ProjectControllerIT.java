@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.quantara.core.AbstractIntegrationTest;
 import dev.quantara.core.dto.CreateProjectRequest;
+import dev.quantara.core.dto.ErrorResponse;
 import dev.quantara.core.dto.ProjectResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,15 @@ class ProjectControllerIT extends AbstractIntegrationTest {
 
     assertThat(listResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(listResponse.getBody()).isNotEmpty();
+  }
+
+  @Test
+  void createProjectWithBlankNameReturnsValidationError() {
+    ResponseEntity<ErrorResponse> response =
+        restTemplate.postForEntity(
+            "/api/projects", new CreateProjectRequest("", null), ErrorResponse.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().fieldErrors()).containsKey("name");
   }
 }
