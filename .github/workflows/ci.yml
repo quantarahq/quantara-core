@@ -33,7 +33,7 @@ jobs:
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32v1-none
 
       - uses: Swatinem/rust-cache@v2
         with:
@@ -43,6 +43,6 @@ jobs:
         working-directory: contracts/deployment-registry
         run: cargo test
 
-      - name: cargo build (wasm32-unknown-unknown, release)
+      - name: cargo build (wasm32v1-none, release)
         working-directory: contracts/deployment-registry
-        run: cargo build --target wasm32-unknown-unknown --release
+        run: cargo build --target wasm32v1-none --release
