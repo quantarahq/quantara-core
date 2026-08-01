@@ -21,10 +21,16 @@ public class DeploymentService {
 
     private final DeploymentRepository deploymentRepository;
     private final ProjectRepository projectRepository;
+    private final ContractService contractService;
 
-    public DeploymentService(DeploymentRepository deploymentRepository, ProjectRepository projectRepository) {
+    public DeploymentService(
+            DeploymentRepository deploymentRepository,
+            ProjectRepository projectRepository,
+            ContractService contractService
+    ) {
         this.deploymentRepository = deploymentRepository;
         this.projectRepository = projectRepository;
+        this.contractService = contractService;
     }
 
     @Transactional
@@ -35,6 +41,8 @@ public class DeploymentService {
         String deploymentId = nextDeploymentId();
         Deployment deployment = new Deployment(deploymentId, project, request.contract(), DeploymentStatus.SUCCESS);
         deploymentRepository.save(deployment);
+
+        contractService.registerContract(deployment);
 
         return new DeployResponse(deployment.getStatus().name(), deployment.getDeploymentId());
     }
